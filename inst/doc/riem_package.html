@@ -12,7 +12,7 @@
 
 <meta name="author" content="M. Salmon" />
 
-<meta name="date" content="2016-05-28" />
+<meta name="date" content="2016-09-09" />
 
 <title>R package riem</title>
 
@@ -70,113 +70,59 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">R package riem</h1>
 <h4 class="author"><em>M. Salmon</em></h4>
-<h4 class="date"><em>2016-05-28</em></h4>
+<h4 class="date"><em>2016-09-09</em></h4>
 
 
 
-<p>NOT_CRAN &lt;- identical(tolower(Sys.getenv(“NOT_CRAN”)), “true”) knitr::opts_chunk$set( collapse = TRUE, comment = “#&gt;”, purl = NOT_CRAN, eval = NOT_CRAN )</p>
 <p>This package allows to get weather data from ASOS stations (airports) via the awesome website of the <a href="https://mesonet.agron.iastate.edu/request/download.phtml?network=IN__ASOS">Iowa Environment Mesonet</a>.</p>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
-<p>To install the package, you will need the devtools package.</p>
+<p>Install the package with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;riem&quot;</span>)</code></pre></div>
+<p>Or install the development version using <a href="https://github.com/hadley/devtools">devtools</a> with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;devtools&quot;</span>)
 <span class="kw">install_github</span>(<span class="st">&quot;ropenscilabs/riem&quot;</span>)</code></pre></div>
 </div>
 <div id="get-available-networks" class="section level1">
 <h1>Get available networks</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;riem&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)
-<span class="kw">riem_networks</span>() %&gt;%<span class="st"> </span><span class="kw">head</span>() %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">code</th>
-<th align="left">name</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">AE__ASOS</td>
-<td align="left">United Arab Emirates ASOS</td>
-</tr>
-<tr class="even">
-<td align="left">AF__ASOS</td>
-<td align="left">Afghanistan ASOS</td>
-</tr>
-<tr class="odd">
-<td align="left">AG__ASOS</td>
-<td align="left">Antigua and Barbuda ASOS</td>
-</tr>
-<tr class="even">
-<td align="left">AI__ASOS</td>
-<td align="left">Anguilla ASOS</td>
-</tr>
-<tr class="odd">
-<td align="left">AK_ASOS</td>
-<td align="left">Alaska ASOS</td>
-</tr>
-<tr class="even">
-<td align="left">AL_ASOS</td>
-<td align="left">Alabama ASOS</td>
-</tr>
-</tbody>
-</table>
+<span class="kw">riem_networks</span>() 
+<span class="co">#&gt; # A tibble: 266 × 2</span>
+<span class="co">#&gt;        code                      name</span>
+<span class="co">#&gt;       &lt;chr&gt;                     &lt;chr&gt;</span>
+<span class="co">#&gt; 1  AE__ASOS United Arab Emirates ASOS</span>
+<span class="co">#&gt; 2  AF__ASOS          Afghanistan ASOS</span>
+<span class="co">#&gt; 3  AG__ASOS  Antigua and Barbuda ASOS</span>
+<span class="co">#&gt; 4  AI__ASOS             Anguilla ASOS</span>
+<span class="co">#&gt; 5   AK_ASOS               Alaska ASOS</span>
+<span class="co">#&gt; 6   AL_ASOS              Alabama ASOS</span>
+<span class="co">#&gt; 7  AL__ASOS              Albania ASOS</span>
+<span class="co">#&gt; 8  AM__ASOS              Armenia ASOS</span>
+<span class="co">#&gt; 9  AN__ASOS Netherlands Antilles ASOS</span>
+<span class="co">#&gt; 10 AO__ASOS               Angola ASOS</span>
+<span class="co">#&gt; # ... with 256 more rows</span></code></pre></div>
 </div>
 <div id="get-available-stations-for-one-network" class="section level1">
 <h1>Get available stations for one network</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">riem_stations</span>(<span class="dt">network =</span> <span class="st">&quot;IN__ASOS&quot;</span>) %&gt;%<span class="st"> </span><span class="kw">head</span>() %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">id</th>
-<th align="left">name</th>
-<th align="right">lon</th>
-<th align="right">lat</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">VEAT</td>
-<td align="left">AGARTALA</td>
-<td align="right">91.24045</td>
-<td align="right">23.88698</td>
-</tr>
-<tr class="even">
-<td align="left">VIAG</td>
-<td align="left">AGRA (IN-AFB)</td>
-<td align="right">77.96089</td>
-<td align="right">27.15583</td>
-</tr>
-<tr class="odd">
-<td align="left">VAAH</td>
-<td align="left">AHMADABAD</td>
-<td align="right">72.63465</td>
-<td align="right">23.07724</td>
-</tr>
-<tr class="even">
-<td align="left">VAAK</td>
-<td align="left">AKOLA AIRPORT</td>
-<td align="right">77.05863</td>
-<td align="right">20.69901</td>
-</tr>
-<tr class="odd">
-<td align="left">VIAH</td>
-<td align="left">ALIGARH</td>
-<td align="right">78.06667</td>
-<td align="right">27.88333</td>
-</tr>
-<tr class="even">
-<td align="left">VIAL</td>
-<td align="left">ALLAHABAD (IN-AF</td>
-<td align="right">81.73387</td>
-<td align="right">25.44006</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">riem_stations</span>(<span class="dt">network =</span> <span class="st">&quot;IN__ASOS&quot;</span>) 
+<span class="co">#&gt; # A tibble: 117 × 4</span>
+<span class="co">#&gt;       id                   name      lon      lat</span>
+<span class="co">#&gt;    &lt;chr&gt;                  &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1   VEAT       AGARTALA         91.24045 23.88698</span>
+<span class="co">#&gt; 2   VIAG       AGRA (IN-AFB)    77.96089 27.15583</span>
+<span class="co">#&gt; 3   VAAH       AHMADABAD        72.63465 23.07724</span>
+<span class="co">#&gt; 4   VAAK       AKOLA AIRPORT    77.05863 20.69901</span>
+<span class="co">#&gt; 5   VIAH       ALIGARH          78.06667 27.88333</span>
+<span class="co">#&gt; 6   VIAL       ALLAHABAD (IN-AF 81.73387 25.44006</span>
+<span class="co">#&gt; 7   VIAR       AMRITSAR         74.86667 31.63333</span>
+<span class="co">#&gt; 8   VAOR                Arkonam 79.69120 13.07120</span>
+<span class="co">#&gt; 9   VOAR                Arkonam 79.69120 13.07120</span>
+<span class="co">#&gt; 10  VAAU Aurangabad Chikalthan  75.39810 19.86270</span>
+<span class="co">#&gt; # ... with 107 more rows</span></code></pre></div>
 </div>
 <div id="get-measures-for-one-station" class="section level1">
 <h1>Get measures for one station</h1>
-<p>Possible variables are, according the <a href="https://mesonet.agron.iastate.edu/request/download.phtml?network=IN__ASOS">IEM website</a> and the <a href="http://www.nws.noaa.gov/asos/pdfs/aum-toc.pdf">ASOS user guide</a>,</p>
+<p>Possible variables are (copied from <a href="https://mesonet.agron.iastate.edu/request/download.phtml">here</a>, see also the <a href="http://www.nws.noaa.gov/asos/pdfs/aum-toc.pdf">ASOS user guide</a>)</p>
 <ul>
 <li><p>station: three or four character site identifier</p></li>
 <li><p>valid: timestamp of the observation (UTC)</p></li>
@@ -201,195 +147,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>presentwx: Present Weather Codes (space seperated), see e.g. <a href="http://www.ofcm.gov/fmh-1/pdf/H-CH8.pdf">this manual</a> for further explanations.</p></li>
 <li><p>metar: unprocessed reported observation in METAR format</p></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">riem_measures</span>(<span class="dt">station =</span> <span class="st">&quot;VOHY&quot;</span>, <span class="dt">date_start =</span> <span class="st">&quot;2000-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2016-04-22&quot;</span>) %&gt;%<span class="st"> </span><span class="kw">head</span>() %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">station</th>
-<th align="left">valid</th>
-<th align="right">lon</th>
-<th align="right">lat</th>
-<th align="right">tmpf</th>
-<th align="right">dwpf</th>
-<th align="right">relh</th>
-<th align="right">drct</th>
-<th align="right">sknt</th>
-<th align="left">p01i</th>
-<th align="right">alti</th>
-<th align="left">mslp</th>
-<th align="right">vsby</th>
-<th align="left">gust</th>
-<th align="left">skyc1</th>
-<th align="left">skyc2</th>
-<th align="left">skyc3</th>
-<th align="left">skyc4</th>
-<th align="right">skyl1</th>
-<th align="right">skyl2</th>
-<th align="right">skyl3</th>
-<th align="right">skyl4</th>
-<th align="left">presentwx</th>
-<th align="left">metar</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">VOHY</td>
-<td align="left">2011-08-23 00:40:00</td>
-<td align="right">78.4676</td>
-<td align="right">17.4531</td>
-<td align="right">73.4</td>
-<td align="right">69.8</td>
-<td align="right">88.51</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">NA</td>
-<td align="right">29.83</td>
-<td align="left">NA</td>
-<td align="right">3.11</td>
-<td align="left">NA</td>
-<td align="left">SCT</td>
-<td align="left">BKN</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">1000</td>
-<td align="right">20000</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">HZ</td>
-<td align="left">VOHY 230040Z 00000KT 5000 HZ SCT010 BKN200 23/21 Q1010 NOSIG</td>
-</tr>
-<tr class="even">
-<td align="left">VOHY</td>
-<td align="left">2011-08-23 01:40:00</td>
-<td align="right">78.4676</td>
-<td align="right">17.4531</td>
-<td align="right">73.4</td>
-<td align="right">69.8</td>
-<td align="right">88.51</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">NA</td>
-<td align="right">29.83</td>
-<td align="left">NA</td>
-<td align="right">3.11</td>
-<td align="left">NA</td>
-<td align="left">SCT</td>
-<td align="left">BKN</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">2000</td>
-<td align="right">20000</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">HZ</td>
-<td align="left">VOHY 230140Z 00000KT 5000 HZ SCT020 BKN200 23/21 Q1010 NOSIG</td>
-</tr>
-<tr class="odd">
-<td align="left">VOHY</td>
-<td align="left">2011-08-23 05:10:00</td>
-<td align="right">78.4676</td>
-<td align="right">17.4531</td>
-<td align="right">82.4</td>
-<td align="right">68.0</td>
-<td align="right">61.81</td>
-<td align="right">270</td>
-<td align="right">7</td>
-<td align="left">NA</td>
-<td align="right">29.85</td>
-<td align="left">NA</td>
-<td align="right">3.73</td>
-<td align="left">NA</td>
-<td align="left">SCT</td>
-<td align="left">SCT</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">1500</td>
-<td align="right">2500</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">VOHY 230510Z 27007KT 6000 SCT015 SCT025 28/20 Q1011 NOSIG</td>
-</tr>
-<tr class="even">
-<td align="left">VOHY</td>
-<td align="left">2011-08-23 05:40:00</td>
-<td align="right">78.4676</td>
-<td align="right">17.4531</td>
-<td align="right">84.2</td>
-<td align="right">66.2</td>
-<td align="right">54.80</td>
-<td align="right">270</td>
-<td align="right">9</td>
-<td align="left">NA</td>
-<td align="right">29.83</td>
-<td align="left">NA</td>
-<td align="right">3.73</td>
-<td align="left">NA</td>
-<td align="left">SCT</td>
-<td align="left">SCT</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">1500</td>
-<td align="right">2500</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">VOHY 230540Z 27009KT 6000 SCT015 SCT025 29/19 Q1010 NOSIG</td>
-</tr>
-<tr class="odd">
-<td align="left">VOHY</td>
-<td align="left">2011-08-23 06:40:00</td>
-<td align="right">78.4676</td>
-<td align="right">17.4531</td>
-<td align="right">84.2</td>
-<td align="right">68.0</td>
-<td align="right">58.32</td>
-<td align="right">260</td>
-<td align="right">5</td>
-<td align="left">NA</td>
-<td align="right">29.83</td>
-<td align="left">NA</td>
-<td align="right">3.73</td>
-<td align="left">NA</td>
-<td align="left">SCT</td>
-<td align="left">SCT</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">1500</td>
-<td align="right">2500</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">VOHY 230640Z 26005KT 6000 SCT015 SCT025 29/20 Q1010 NOSIG</td>
-</tr>
-<tr class="even">
-<td align="left">VOHY</td>
-<td align="left">2011-08-23 07:40:00</td>
-<td align="right">78.4676</td>
-<td align="right">17.4531</td>
-<td align="right">84.2</td>
-<td align="right">66.2</td>
-<td align="right">54.80</td>
-<td align="right">250</td>
-<td align="right">7</td>
-<td align="left">NA</td>
-<td align="right">29.77</td>
-<td align="left">NA</td>
-<td align="right">3.73</td>
-<td align="left">NA</td>
-<td align="left">SCT</td>
-<td align="left">SCT</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">2000</td>
-<td align="right">2500</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">VOHY 230740Z 25007KT 6000 SCT020 SCT025 29/19 Q1008 NOSIG</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">measures &lt;-<span class="st"> </span><span class="kw">riem_measures</span>(<span class="dt">station =</span> <span class="st">&quot;VOHY&quot;</span>, <span class="dt">date_start =</span> <span class="st">&quot;2000-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2016-04-22&quot;</span>) 
+<span class="kw">head</span>(measures)
+<span class="co">#&gt; # A tibble: 6 × 24</span>
+<span class="co">#&gt;   station               valid     lon     lat  tmpf  dwpf  relh  drct</span>
+<span class="co">#&gt;     &lt;chr&gt;              &lt;dttm&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1    VOHY 2011-08-23 00:40:00 78.4676 17.4531  73.4  69.8 88.51     0</span>
+<span class="co">#&gt; 2    VOHY 2011-08-23 01:40:00 78.4676 17.4531  73.4  69.8 88.51     0</span>
+<span class="co">#&gt; 3    VOHY 2011-08-23 05:10:00 78.4676 17.4531  82.4  68.0 61.81   270</span>
+<span class="co">#&gt; 4    VOHY 2011-08-23 05:40:00 78.4676 17.4531  84.2  66.2 54.80   270</span>
+<span class="co">#&gt; 5    VOHY 2011-08-23 06:40:00 78.4676 17.4531  84.2  68.0 58.32   260</span>
+<span class="co">#&gt; 6    VOHY 2011-08-23 07:40:00 78.4676 17.4531  84.2  66.2 54.80   250</span>
+<span class="co">#&gt; # ... with 16 more variables: sknt &lt;dbl&gt;, p01i &lt;dbl&gt;, alti &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   mslp &lt;lgl&gt;, vsby &lt;dbl&gt;, gust &lt;dbl&gt;, skyc1 &lt;chr&gt;, skyc2 &lt;chr&gt;,</span>
+<span class="co">#&gt; #   skyc3 &lt;chr&gt;, skyc4 &lt;chr&gt;, skyl1 &lt;dbl&gt;, skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   skyl4 &lt;dbl&gt;, presentwx &lt;chr&gt;, metar &lt;chr&gt;</span></code></pre></div>
 <p>For conversion of wind speed or temperature into other units, see <a href="https://github.com/geanders/weathermetrics/">this package</a>.</p>
 </div>
 
