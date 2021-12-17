@@ -8,12 +8,20 @@
 #' riem_networks()
 #' }
 riem_networks <- function(){
-  content <- jsonlite::fromJSON("http://mesonet.agron.iastate.edu/geojson/networks.geojson")# nolint
-  names <- content$features$properties$name
-  codes <- content$features$id
+  resp <- httr::GET("http://mesonet.agron.iastate.edu/api/1/networks.json")# nolint
+  httr::stop_for_status(resp)
+
+  content <- jsonlite::fromJSON(
+    httr::content(
+      resp, as ="text"
+      )
+    )
+
+  names <- content$data$name
+  codes <- content$data$id
   whichASOS <- grepl("ASOS", codes) | grepl("AWOS", codes)
   codes <- codes[whichASOS]
   names <- names[whichASOS]
-  tibble::tibble_(list(code = ~ codes,
-                           name = ~ names))
+  tibble::tibble(code = codes,
+                 name = names)
 }

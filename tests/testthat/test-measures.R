@@ -1,9 +1,10 @@
 library("riem")
 context("measures")
 test_that("riem_measures returns the right output",{
-  skip_on_cran()
-  output <- riem_measures(station = "VOHY", date_start = "2014-01-01",
-                          date_end = "2016-04-22")
+  vcr::use_cassette("measures", {
+  output <- riem_measures(station = "VOHY", date_start = "2014-03-01",
+                          date_end = "2014-04-05")
+  })
   expect_is(output, "tbl_df")
   expect_is(output$station, "character")
   expect_is(output$valid, "POSIXct")
@@ -18,7 +19,7 @@ test_that("riem_measures returns the right output",{
   expect_is(output$alti, "numeric")
   expect_true(class(output$mslp) %in% c("character", "logical"))
   expect_is(output$vsby, "numeric")
-  expect_true(class(output$gust) %in% c("character", "numeric"))
+  expect_true(class(output$gust) %in% c("character", "numeric", "logical"))
   expect_is(output$skyc1, "character")
   expect_is(output$skyc2, "character")
   expect_is(output$skyc3, "character")
@@ -27,14 +28,15 @@ test_that("riem_measures returns the right output",{
   expect_is(output$skyl2, "numeric")
   expect_is(output$skyl3, "numeric")
   expect_is(output$skyl4, "numeric")
-  expect_is(output$presentwx, "character")
+  expect_is(output$wxcodes, "character")
   expect_is(output$metar, "character")})
 
 test_that("riem_measures outputs warning if no results",{
-  skip_on_cran()
+  vcr::use_cassette("measures-warnings", {
   expect_warning(riem_measures(date_start = "3050-12-01",
                                date_end = "3055-12-01"),
                  "No results for this query.")
+  })
 })
 
 test_that("riem_measures checks dates",{

@@ -30,8 +30,17 @@
 #' \item skyl3: Sky Level 3 Altitude in feet
 #' \item skyl4: Sky Level 4 Altitude in feet
 #' \item presentwx: Present Weather Codes (space seperated),
-#'  see e.g. [this manual](http://www.ofcm.gov/fmh-1/pdf/H-CH8.pdf) for further explanations.
+#'  see e.g. Chapter 8 of [this manual](https://www.ofcm.gov/publications/fmh/FMH1/FMH1.pdf) for further explanations.
+#' \item feel: Apparent Temperature (Wind Chill or Heat Index) in degF
+#' \item ice_accretion_1hr: Ice Accretion over 1 Hour in inch
+#' \item ice_accretion_3hr: Ice Accretion over 3 Hour in inch
+#' \item ice_accretion_6hr: Ice Accretion over 6 Hour in inch
+#' \item relh: Relative Humidity in %
 #' \item metar: unprocessed reported observation in METAR format
+#' \item peak_wind_gust: Wind gust in knots from the METAR PK WND remark, this value may be different than the value found in the gust field. The gust field is derived from the standard METAR wind report.
+#' \item peak_wind_drct: The wind direction in degrees North denoted in the METAR PK WND remark.
+#' \item peak_wind_time: The timestamp of the PK WND value in the same timezone as the valid field and controlled by the tz parameter.
+
 #' }
 #' @details The data is queried through \url{https://mesonet.agron.iastate.edu/request/download.phtml}.
 #' @export
@@ -49,13 +58,18 @@ riem_measures <- function(station = "VOHY",
 
 
 
-  date_start <- lubridate::ymd(date_start)
+  date_start <- suppressWarnings(
+    lubridate::ymd(date_start)
+  )
 
   if(is.na(date_start)){
     stop(call. = FALSE,
          "date_start has to be formatted like \"2014-12-14\", that is year-month-day.") # nolint
   }
-  date_end <- lubridate::ymd(date_end)
+  date_end <- suppressWarnings(
+    lubridate::ymd(date_end)
+  )
+
   if(is.na(date_end)){
     stop(call. = FALSE,
          "date_end has to be formatted like \"2014-12-14\", that is year-month-day.")# nolint
