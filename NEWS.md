@@ -1,3 +1,8 @@
+# riem (development version)
+
+* Switches to httr2 and httptest2 under the hood.
+* Improves error messages.
+
 # riem 0.2.0
 
 * Switches to newer IEM metadata web services (#35, @akrherz)
