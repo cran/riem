@@ -1,7 +1,7 @@
 Type: Package
 Package: riem
 Title: Accesses Weather Data from the Iowa Environment Mesonet
-Version: 0.3.2
+Version: 1.0.0
 Authors@R: c(
     person("Maëlle", "Salmon", , "maelle.salmon@yahoo.se", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-2815-0399")),
@@ -11,7 +11,9 @@ Authors@R: c(
            comment = "The research leading to these results has received funding from the European Research Council under the ERC Grant Agreement number 336167– the CHAI Project"),
     person("rOpenSci", role = "fnd",
            comment = "https://ropensci.org/"),
-    person("Daryl", "Herzmann", , "akrherz@gmail.com", role = "ctb")
+    person("Daryl", "Herzmann", , "akrherz@gmail.com", role = "ctb"),
+    person("Jonathan", "Elchison", email = "JElchison@gmail.com", role = c("aut"),
+           comment = c(ORCID = "0009-0004-0787-3426"))
   )
 Description: Allows to get weather data from Automated Surface Observing
     System (ASOS) stations (airports) in the whole world thanks to the
@@ -25,9 +27,9 @@ Suggests: dplyr, forecast, ggplot2, httptest2, knitr, rmarkdown,
         testthat (>= 3.0.0), weathermetrics, xts
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2.9000
 NeedsCompilation: no
-Packaged: 2024-07-26 12:07:12 UTC; maelle
+Packaged: 2025-01-31 08:47:39 UTC; maelle
 Author: Maëlle Salmon [aut, cre] (<https://orcid.org/0000-0002-2815-0399>),
   Brooke Anderson [rev] (Brooke Anderson reviewed the package for
     rOpenSci, see https://github.com/ropensci/onboarding/issues/39.),
@@ -35,7 +37,8 @@ Author: Maëlle Salmon [aut, cre] (<https://orcid.org/0000-0002-2815-0399>),
     funding from the European Research Council under the ERC Grant
     Agreement number 336167– the CHAI Project),
   rOpenSci [fnd] (https://ropensci.org/),
-  Daryl Herzmann [ctb]
+  Daryl Herzmann [ctb],
+  Jonathan Elchison [aut] (<https://orcid.org/0009-0004-0787-3426>)
 Maintainer: Maëlle Salmon <maelle.salmon@yahoo.se>
 Repository: CRAN
-Date/Publication: 2024-07-26 12:20:02 UTC
+Date/Publication: 2025-01-31 09:10:02 UTC

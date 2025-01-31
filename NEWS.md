@@ -1,3 +1,13 @@
+# riem 1.0.0
+
+* Breaking change: `date_start` and `station` no longer have default values.
+
+* New arguments `data`, `latlon`, `report_type`, `elev` (#48, @JElchison).
+
+* Breaking change: `latlon` default to `FALSE`: you need to explicitly set it to
+  `TRUE` for the latitude and longitude of the station 
+  to be included in the output.
+
 # riem 0.3.2
 
 * Remove last usage of vcr as the choice was made to use httptest2 instead.
